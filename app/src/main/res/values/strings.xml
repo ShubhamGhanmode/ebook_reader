@@ -1,3 +1,23 @@
 <resources>
     <string name="app_name">InkFold</string>
+    <string name="reader_toolbar_title">Reader</string>
+    <string name="reader_resource_error">A section of this EPUB could not be loaded.</string>
+    <string name="reader_loading">Opening your book...</string>
+    <string name="reader_navigate_back">Go back</string>
+    <string name="reader_overlay_label">Reader settings and controls</string>
+    <string name="reader_open_settings">Open reader settings</string>
+    <string name="reader_settings_title">Reading appearance</string>
+    <string name="reader_settings_subtitle">Adjust the page without leaving the chapter.</string>
+    <string name="reader_settings_close">Close reader settings</string>
+    <string name="reader_settings_section_theme">Theme</string>
+    <string name="reader_settings_section_text_size">Text size</string>
+    <string name="reader_settings_section_page_margins">Page margins</string>
+    <string name="reader_settings_reset">Restore defaults</string>
+    <string name="reader_settings_theme_light">Light</string>
+    <string name="reader_settings_theme_sepia">Sepia</string>
+    <string name="reader_settings_theme_dark">Dark</string>
+    <string name="reader_settings_fixed_layout_message">This EPUB uses a fixed layout, so InkFold keeps the original page design instead of restyling text, margins, or themes.</string>
+    <string name="reader_settings_preview_small">A</string>
+    <string name="reader_settings_preview_letters">Aa</string>
+    <string name="reader_settings_preview_large">A</string>
 </resources>

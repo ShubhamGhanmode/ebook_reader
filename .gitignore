@@ -34,3 +34,5 @@ google-services.json
 
 # Android Profiling
 *.hprof
+
+/readium-kotlin-toolkit-3.1.2

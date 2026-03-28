@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="inkfold_window_background">#17120E</color>
+    <color name="inkfold_toolbar_surface">#211A16</color>
+    <color name="inkfold_toolbar_on_surface">#F6E7D2</color>
+</resources>
