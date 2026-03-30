@@ -109,7 +109,7 @@ app/src/main/java/com/shubhamghanmode/inkfold/
 ### Open The Project
 
 ```bash
-git clone <your-fork-or-this-repo-url>
+git clone https://github.com/ShubhamGhanmode/ebook_reader.git
 cd InkFold
 ./gradlew :app:assembleDebug
 ```
@@ -158,7 +158,7 @@ Verified on `2026-03-29`:
 12. If device voice data is missing, verify the install-voice recovery path works.
 13. Switch among palette presets from the home screen settings and verify the shelf and reader chrome update in both system light and dark mode.
 
-## Scope
+<!-- ## Scope
 
 | In Scope | Out Of Scope Unless Explicitly Requested |
 | --- | --- |
@@ -167,7 +167,7 @@ Verified on `2026-03-29`:
 | Personal library shelf UI | OPDS browsing inside InkFold |
 | Fragment-hosted EPUB reading | DRM / LCP work |
 | Progress persistence and resume | Highlights, annotations, search UI, bookstore features |
-| Offline reading of imported local books | General-purpose document management |
+| Offline reading of imported local books | General-purpose document management | -->
 
 ## Repo Landmarks
 
@@ -182,14 +182,14 @@ Verified on `2026-03-29`:
 | `app/src/main/java/com/shubhamghanmode/inkfold/data/book/` | Room entities/DAO plus import, deletion, file storage, and progression logic |
 | `readium-kotlin-toolkit-3.1.2/test-app/` | Primary reference implementation for Readium integration patterns |
 
-## Roadmap
+<!-- ## Roadmap
 
 - Run connected instrumentation tests on a real emulator or device.
 - Complete full external file-open acceptance from a file manager.
 - Perform on-device validation for reader appearance settings, palette switching, outline navigation, quick-jump flow, and read aloud.
 - Decide whether per-book appearance overrides should ship after shared defaults prove stable.
 - Decide whether read aloud should expand into background or media-session controls.
-- Keep page-flip investigation behind the core reading-loop roadmap.
+- Keep page-flip investigation behind the core reading-loop roadmap. -->
 
 ## Documentation
 
