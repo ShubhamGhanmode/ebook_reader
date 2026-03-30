@@ -1,6 +1,7 @@
 package com.shubhamghanmode.inkfold.feature.reader
 
 import android.content.Intent
+import android.graphics.Color
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -14,9 +15,11 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import com.shubhamghanmode.inkfold.R
+import kotlin.time.Duration.Companion.seconds
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
+import org.readium.r2.navigator.Decoration
 import org.readium.r2.navigator.epub.EpubNavigatorFragment
 import org.readium.r2.navigator.epub.EpubPreferences
 import org.readium.r2.navigator.input.InputListener
@@ -36,18 +39,24 @@ class ReaderFragment : Fragment(), EpubNavigatorFragment.Listener {
     private var navigator: EpubNavigatorFragment? = null
     private var locatorJob: Job? = null
     private var preferencesJob: Job? = null
+    private var navigationJob: Job? = null
+    private var ttsStartJob: Job? = null
+    private var ttsFollowJob: Job? = null
+    private var ttsHighlightJob: Job? = null
     private var chromeTapListener: InputListener? = null
     private var attachedBookId: Long? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         childFragmentManager.fragmentFactory =
-            viewModel.uiState.value.session
-                ?.navigatorFactory
-                ?.createFragmentFactory(
-                    initialLocator = viewModel.uiState.value.session?.initialLocator,
-                    initialPreferences = viewModel.uiState.value.session?.initialPreferences ?: EpubPreferences(),
-                    listener = this
-                )
+            viewModel.session.value
+                ?.let { session ->
+                    session.navigatorFactory.createFragmentFactory(
+                        initialLocator = session.initialLocator,
+                        initialPreferences = session.initialPreferences,
+                        listener = this,
+                        configuration = session.navigatorConfiguration
+                    )
+                }
                 ?: EpubNavigatorFragment.createDummyFactory()
 
         super.onCreate(savedInstanceState)
@@ -65,8 +74,8 @@ class ReaderFragment : Fragment(), EpubNavigatorFragment.Listener {
 
         viewLifecycleOwner.lifecycleScope.launch {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
-                viewModel.uiState.collectLatest { state ->
-                    state.session?.let(::attachNavigator)
+                viewModel.session.collectLatest { session ->
+                    session?.let(::attachNavigator)
                 }
             }
         }
@@ -82,7 +91,8 @@ class ReaderFragment : Fragment(), EpubNavigatorFragment.Listener {
         childFragmentManager.fragmentFactory = session.navigatorFactory.createFragmentFactory(
             initialLocator = session.initialLocator,
             initialPreferences = session.initialPreferences,
-            listener = this
+            listener = this,
+            configuration = session.navigatorConfiguration
         )
 
         childFragmentManager.commitNow {
@@ -99,7 +109,9 @@ class ReaderFragment : Fragment(), EpubNavigatorFragment.Listener {
 
         navigator?.let(::startProgressTracking)
         navigator?.let(::bindPreferences)
+        navigator?.let(::bindNavigationRequests)
         navigator?.let(::bindChromeTapHandling)
+        navigator?.let(::bindTts)
     }
 
     private fun startProgressTracking(navigatorFragment: EpubNavigatorFragment) {
@@ -138,6 +150,7 @@ class ReaderFragment : Fragment(), EpubNavigatorFragment.Listener {
 
     companion object {
         private const val NAVIGATOR_FRAGMENT_TAG = "epub-navigator"
+        private val TTS_HIGHLIGHT_TINT = Color.parseColor("#66B96D4B")
     }
 
     private fun bindPreferences(navigatorFragment: EpubNavigatorFragment) {
@@ -145,6 +158,16 @@ class ReaderFragment : Fragment(), EpubNavigatorFragment.Listener {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
                 viewModel.navigatorPreferences.collect { preferences ->
                     navigatorFragment.submitPreferences(preferences)
+                }
+            }
+        }
+    }
+
+    private fun bindNavigationRequests(navigatorFragment: EpubNavigatorFragment) {
+        navigationJob = viewLifecycleOwner.lifecycleScope.launch {
+            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.navigationRequests.collect { locator ->
+                    navigatorFragment.go(locator, animated = false)
                 }
             }
         }
@@ -176,11 +199,56 @@ class ReaderFragment : Fragment(), EpubNavigatorFragment.Listener {
         chromeTapListener = centerTapListener
     }
 
+    private fun bindTts(navigatorFragment: EpubNavigatorFragment) {
+        ttsStartJob = viewLifecycleOwner.lifecycleScope.launch {
+            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.ttsStartRequests.collect {
+                    viewModel.startReadAloud(
+                        navigatorFragment.firstVisibleElementLocator()
+                    )
+                }
+            }
+        }
+
+        ttsFollowJob = viewLifecycleOwner.lifecycleScope.launch {
+            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.ttsVisualSyncLocators
+                    .throttleLatest(1.seconds)
+                    .collect { locator ->
+                        navigatorFragment.go(locator, animated = false)
+                    }
+            }
+        }
+
+        ttsHighlightJob = viewLifecycleOwner.lifecycleScope.launch {
+            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.ttsHighlight.collect { locator ->
+                    val decoration = locator?.let {
+                        Decoration(
+                            id = "tts-highlight",
+                            locator = it,
+                            style = Decoration.Style.Highlight(tint = TTS_HIGHLIGHT_TINT)
+                        )
+                    }
+                    navigatorFragment.applyDecorations(listOfNotNull(decoration), "tts")
+                }
+            }
+        }
+    }
+
     private fun clearNavigatorBindings() {
         locatorJob?.cancel()
         locatorJob = null
         preferencesJob?.cancel()
         preferencesJob = null
+        navigationJob?.cancel()
+        navigationJob = null
+        ttsStartJob?.cancel()
+        ttsStartJob = null
+        ttsFollowJob?.cancel()
+        ttsFollowJob = null
+        ttsHighlightJob?.cancel()
+        ttsHighlightJob = null
         chromeTapListener?.let { inputListener ->
             navigator?.removeInputListener(inputListener)
         }

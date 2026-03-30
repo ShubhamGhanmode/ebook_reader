@@ -1,5 +1,6 @@
 package com.shubhamghanmode.inkfold.feature.reader
 
+import android.app.Application
 import android.content.Context
 import android.content.res.Configuration
 import androidx.datastore.core.DataStore
@@ -7,15 +8,19 @@ import androidx.datastore.preferences.core.Preferences
 import com.shubhamghanmode.inkfold.ReadiumServices
 import com.shubhamghanmode.inkfold.data.book.LibraryRepository
 import com.shubhamghanmode.inkfold.feature.reader.preferences.ReaderPreferencesManager
+import com.shubhamghanmode.inkfold.feature.reader.tts.ReaderTtsInitData
+import com.shubhamghanmode.inkfold.feature.reader.tts.ReaderTtsPreferencesManager
 import org.readium.r2.navigator.preferences.Theme
 import java.io.File
 import java.util.concurrent.ConcurrentHashMap
 import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
+import org.readium.navigator.media.tts.TtsNavigatorFactory
 import org.readium.r2.navigator.epub.EpubNavigatorFactory
 import org.readium.r2.navigator.epub.EpubPreferences
 import org.readium.r2.shared.publication.Publication
 import org.readium.r2.shared.publication.allAreHtml
+import org.readium.r2.shared.publication.services.positions
 import org.readium.r2.shared.ExperimentalReadiumApi
 
 @OptIn(ExperimentalReadiumApi::class)
@@ -62,6 +67,7 @@ class ReaderRepository(
             dataStore = preferencesDataStore,
             defaultSharedPreferences = EpubPreferences(theme = defaultReaderTheme())
         )
+        val positionCount = runCatching { publication.positions().size }.getOrDefault(0)
         val initialSharedPreferences = preferencesManager.currentSharedPreferences()
         val initialBookPreferences = preferencesManager.currentBookPreferences()
 
@@ -70,11 +76,14 @@ class ReaderRepository(
             title = book.title,
             publication = publication,
             navigatorFactory = EpubNavigatorFactory(publication),
+            navigatorConfiguration = ReaderNavigatorConfiguration.create(),
+            positionCount = positionCount,
             preferencesManager = preferencesManager,
             initialLocator = libraryRepository.parseLocator(book.progressionJson),
             initialSharedPreferences = initialSharedPreferences,
             initialBookPreferences = initialBookPreferences,
-            initialPreferences = initialSharedPreferences + initialBookPreferences
+            initialPreferences = initialSharedPreferences + initialBookPreferences,
+            ttsInitData = createTtsInitData(publication)
         )
 
         sessions[bookId] = session
@@ -92,4 +101,17 @@ class ReaderRepository(
             Configuration.UI_MODE_NIGHT_YES -> Theme.DARK
             else -> Theme.LIGHT
         }
+
+    private fun createTtsInitData(publication: Publication): ReaderTtsInitData? {
+        val application = context as? Application ?: return null
+        val navigatorFactory = TtsNavigatorFactory(
+            application = application,
+            publication = publication
+        ) ?: return null
+
+        return ReaderTtsInitData(
+            navigatorFactory = navigatorFactory,
+            preferencesManager = ReaderTtsPreferencesManager(preferencesDataStore)
+        )
+    }
 }

@@ -16,12 +16,14 @@ import androidx.lifecycle.repeatOnLifecycle
 import com.shubhamghanmode.inkfold.feature.home.HomeScreen
 import com.shubhamghanmode.inkfold.feature.home.HomeViewModel
 import com.shubhamghanmode.inkfold.feature.reader.ReaderActivityContract
+import com.shubhamghanmode.inkfold.ui.theme.AppThemeSettings
 import com.shubhamghanmode.inkfold.ui.theme.InkFoldTheme
 import kotlinx.coroutines.launch
 
 class MainActivity : ComponentActivity() {
+    private val appContainer by lazy { (application as InkFoldApplication).appContainer }
     private val homeViewModel: HomeViewModel by viewModels {
-        HomeViewModel.factory((application as InkFoldApplication).appContainer)
+        HomeViewModel.factory(appContainer)
     }
 
     private val importDocumentLauncher =
@@ -44,16 +46,25 @@ class MainActivity : ComponentActivity() {
 
         setContent {
             val uiState by homeViewModel.uiState.collectAsStateWithLifecycle()
+            val appThemeSettings by appContainer.appThemePreferencesRepository.settings.collectAsStateWithLifecycle(
+                initialValue = AppThemeSettings(),
+            )
 
-            InkFoldTheme {
+            InkFoldTheme(themePreset = appThemeSettings.themePreset) {
                 HomeScreen(
                     uiState = uiState,
+                    selectedThemePreset = appThemeSettings.themePreset,
                     onImportClick = {
                         importDocumentLauncher.launch(arrayOf("*/*"))
                     },
+                    onThemePresetSelected = { themePreset ->
+                        lifecycleScope.launch {
+                            appContainer.appThemePreferencesRepository.setThemePreset(themePreset)
+                        }
+                    },
                     onOpenBook = homeViewModel::openBook,
                     onDeleteBook = homeViewModel::deleteBook,
-                    onTransientMessageShown = homeViewModel::consumeTransientMessage
+                    onTransientMessageShown = homeViewModel::consumeTransientMessage,
                 )
             }
         }
@@ -78,7 +89,7 @@ class MainActivity : ComponentActivity() {
 
         fun createIntent(
             context: Context,
-            transientMessage: String? = null
+            transientMessage: String? = null,
         ): Intent =
             Intent(context, MainActivity::class.java).apply {
                 transientMessage?.let {

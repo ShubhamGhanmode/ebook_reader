@@ -1,61 +1,61 @@
 package com.shubhamghanmode.inkfold.ui.theme
 
+import android.app.Activity
+import android.content.Context
+import android.content.ContextWrapper
+import android.graphics.drawable.ColorDrawable
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.darkColorScheme
-import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.SideEffect
 import androidx.compose.foundation.isSystemInDarkTheme
-import androidx.compose.ui.graphics.Color
-
-private val DarkColorScheme = darkColorScheme(
-    primary = NightAccent,
-    onPrimary = NightPaper,
-    primaryContainer = Chestnut,
-    onPrimaryContainer = Parchment,
-    secondary = Wheat,
-    onSecondary = NightPaper,
-    secondaryContainer = Color(0xFF3B2D24),
-    onSecondaryContainer = Parchment,
-    tertiary = Moss,
-    onTertiary = NightPaper,
-    tertiaryContainer = Color(0xFF2D3225),
-    onTertiaryContainer = Parchment,
-    background = NightPaper,
-    onBackground = Color(0xFFF6E7D2),
-    surface = NightSurface,
-    onSurface = Color(0xFFF6E7D2),
-    onSurfaceVariant = Color(0xFFD7C1AA)
-)
-
-private val LightColorScheme = lightColorScheme(
-    primary = Terracotta,
-    onPrimary = Color(0xFFFFF8F2),
-    primaryContainer = ParchmentDeep,
-    onPrimaryContainer = Ink,
-    secondary = Moss,
-    onSecondary = Color(0xFFFFFCF8),
-    secondaryContainer = Color(0xFFE7E4D1),
-    onSecondaryContainer = Ink,
-    tertiary = Chestnut,
-    onTertiary = Color(0xFFFFF8F2),
-    tertiaryContainer = Color(0xFFF0D5C4),
-    onTertiaryContainer = Ink,
-    background = Parchment,
-    onBackground = Ink,
-    surface = ParchmentMuted,
-    onSurface = Ink,
-    surfaceVariant = Color(0xFFEDDCC4),
-    onSurfaceVariant = InkSoft
-)
+import androidx.compose.material3.ColorScheme
+import androidx.compose.ui.platform.LocalView
+import androidx.compose.ui.graphics.toArgb
+import androidx.core.view.WindowCompat
 
 @Composable
 fun InkFoldTheme(
+    themePreset: AppThemePreset = AppThemePreset.CLASSIC,
     darkTheme: Boolean = isSystemInDarkTheme(),
     content: @Composable () -> Unit
 ) {
+    val colorScheme = themePreset.colorScheme(darkTheme)
+    val view = LocalView.current
+
+    if (!view.isInEditMode) {
+        SideEffect {
+            val activity = view.context.findActivity() ?: return@SideEffect
+            activity.syncInkFoldWindow(colorScheme = colorScheme, darkTheme = darkTheme, view = view)
+        }
+    }
+
     MaterialTheme(
-        colorScheme = if (darkTheme) DarkColorScheme else LightColorScheme,
+        colorScheme = colorScheme,
         typography = Typography,
         content = content
     )
+}
+
+private tailrec fun Context.findActivity(): Activity? =
+    when (this) {
+        is Activity -> this
+        is ContextWrapper -> baseContext.findActivity()
+        else -> null
+    }
+
+@Suppress("DEPRECATION")
+private fun Activity.syncInkFoldWindow(
+    colorScheme: ColorScheme,
+    darkTheme: Boolean,
+    view: android.view.View
+) {
+    val backgroundColor = colorScheme.background.toArgb()
+    val window = window
+
+    window.setBackgroundDrawable(ColorDrawable(backgroundColor))
+    window.navigationBarColor = backgroundColor
+    WindowCompat.getInsetsController(window, view).apply {
+        isAppearanceLightStatusBars = !darkTheme
+        isAppearanceLightNavigationBars = !darkTheme
+    }
 }

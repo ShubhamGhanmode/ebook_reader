@@ -8,9 +8,10 @@ plugins {
 android {
     namespace = "com.shubhamghanmode.inkfold"
     compileSdk {
-        version = release(36) {
-            minorApiLevel = 1
-        }
+        version =
+            release(36) {
+                minorApiLevel = 1
+            }
     }
 
     defaultConfig {
@@ -25,11 +26,28 @@ android {
 
     buildTypes {
         release {
-            isMinifyEnabled = false
+            isMinifyEnabled = true
+            isShrinkResources = true
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
-                "proguard-rules.pro"
+                "proguard-rules.pro",
             )
+        }
+        debug {
+            isMinifyEnabled = true
+            isShrinkResources = true
+            proguardFiles(
+                getDefaultProguardFile("proguard-android-optimize.txt"),
+                "proguard-rules.pro",
+            )
+        }
+    }
+    splits {
+        abi {
+            isEnable = true // Enables the split
+            reset() // Resets the list of ABIs we want to include
+            include("arm64-v8a") // Only include what you need
+            isUniversalApk = false // Set to true if you ALSO want one big fat APK
         }
     }
     compileOptions {
@@ -46,6 +64,8 @@ android {
 }
 
 dependencies {
+    implementation(libs.androidx.material3)
+    implementation(libs.androidx.compose.foundation.layout)
     coreLibraryDesugaring(libs.desugar.jdk.libs)
 
     implementation(libs.androidx.core.ktx)
@@ -72,6 +92,7 @@ dependencies {
     implementation(libs.readium.shared)
     implementation(libs.readium.streamer)
     implementation(libs.readium.navigator)
+    implementation(libs.readium.navigator.media.tts)
 
     testImplementation(libs.junit)
     testImplementation(libs.kotlinx.coroutines.test)
