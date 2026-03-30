@@ -44,20 +44,20 @@
   <rect x="1098" y="95" width="8" height="228" rx="4" fill="#734C33"/>
   <rect x="102" y="316" width="996" height="7" rx="3.5" fill="#8B5E3F" fill-opacity="0.55"/>
 
-  <g opacity="0.94">
-    <rect x="790" y="116" width="58" height="152" rx="8" fill="url(#spine1)"/>
-    <rect x="855" y="130" width="48" height="138" rx="8" fill="url(#spine2)"/>
-    <rect x="909" y="104" width="64" height="164" rx="8" fill="url(#spine3)"/>
-    <rect x="979" y="122" width="56" height="146" rx="8" fill="url(#spine2)"/>
-    <rect x="1041" y="142" width="34" height="126" rx="8" fill="url(#spine1)"/>
+  <g opacity="0.3">
+    <rect x="790" y="116" width="44" height="114" rx="6" fill="url(#spine1)"/>
+    <rect x="855" y="130" width="36" height="104" rx="6" fill="url(#spine2)"/>
+    <rect x="909" y="104" width="48" height="123" rx="6" fill="url(#spine3)"/>
+    <rect x="979" y="122" width="42" height="110" rx="6" fill="url(#spine2)"/>
+    <rect x="1041" y="142" width="26" height="95" rx="6" fill="url(#spine1)"/>
 
-    <rect x="801" y="145" width="36" height="4" rx="2" fill="#E7C79E"/>
-    <rect x="801" y="157" width="24" height="4" rx="2" fill="#E7C79E"/>
-    <rect x="865" y="158" width="27" height="4" rx="2" fill="#F8E6C7"/>
-    <rect x="919" y="140" width="44" height="4" rx="2" fill="#C9A17A"/>
-    <rect x="919" y="152" width="31" height="4" rx="2" fill="#C9A17A"/>
-    <rect x="990" y="152" width="33" height="4" rx="2" fill="#F6DFC3"/>
-    <rect x="1047" y="168" width="20" height="4" rx="2" fill="#E6C19D"/>
+    <rect x="801" y="145" width="27" height="3" rx="1.5" fill="#E7C79E"/>
+    <rect x="801" y="157" width="18" height="3" rx="1.5" fill="#E7C79E"/>
+    <rect x="865" y="158" width="20" height="3" rx="1.5" fill="#F8E6C7"/>
+    <rect x="919" y="140" width="33" height="3" rx="1.5" fill="#C9A17A"/>
+    <rect x="919" y="152" width="23" height="3" rx="1.5" fill="#C9A17A"/>
+    <rect x="990" y="152" width="25" height="3" rx="1.5" fill="#F6DFC3"/>
+    <rect x="1047" y="168" width="15" height="3" rx="1.5" fill="#E6C19D"/>
   </g>
 
   <g opacity="0.7">
@@ -75,8 +75,8 @@
     <rect x="144" y="329" width="154" height="34" rx="17" fill="#5B4636"/>
     <rect x="312" y="329" width="134" height="34" rx="17" fill="#A46A3D"/>
     <rect x="459" y="329" width="126" height="34" rx="17" fill="#7B5C46"/>
-    <text x="169" y="351" fill="#FFF7EE" font-family="Verdana, Arial, sans-serif" font-size="14" font-weight="700">LOCAL-FIRST</text>
-    <text x="339" y="351" fill="#FFF7EE" font-family="Verdana, Arial, sans-serif" font-size="14" font-weight="700">READIUM</text>
-    <text x="485" y="351" fill="#FFF7EE" font-family="Verdana, Arial, sans-serif" font-size="14" font-weight="700">COMPOSE UI</text>
+    <text x="169" y="351" fill="#FFF7EE" font-family="Verdana, Arial, sans-serif" font-size="12" font-weight="700">LOCAL-FIRST</text>
+    <text x="339" y="351" fill="#FFF7EE" font-family="Verdana, Arial, sans-serif" font-size="12" font-weight="700">READIUM</text>
+    <text x="485" y="351" fill="#FFF7EE" font-family="Verdana, Arial, sans-serif" font-size="12" font-weight="700">COMPOSE UI</text>
   </g>
 </svg>
