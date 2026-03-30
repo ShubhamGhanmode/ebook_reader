@@ -1,0 +1,82 @@
+<svg width="1200" height="420" viewBox="0 0 1200 420" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="title desc">
+  <title id="title">InkFold repository banner</title>
+  <desc id="desc">A parchment-toned editorial banner for the InkFold Android EPUB reader.</desc>
+  <defs>
+    <linearGradient id="bg" x1="102" y1="44" x2="1102" y2="396" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#F5E8D0"/>
+      <stop offset="0.48" stop-color="#E9D3B0"/>
+      <stop offset="1" stop-color="#D4AE7A"/>
+    </linearGradient>
+    <linearGradient id="panel" x1="120" y1="84" x2="1004" y2="356" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#FFF9F0" stop-opacity="0.96"/>
+      <stop offset="1" stop-color="#F4E2C5" stop-opacity="0.88"/>
+    </linearGradient>
+    <linearGradient id="spine1" x1="0" y1="0" x2="0" y2="126" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#7D4C32"/>
+      <stop offset="1" stop-color="#5A3425"/>
+    </linearGradient>
+    <linearGradient id="spine2" x1="0" y1="0" x2="0" y2="118" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#C68C52"/>
+      <stop offset="1" stop-color="#9A6239"/>
+    </linearGradient>
+    <linearGradient id="spine3" x1="0" y1="0" x2="0" y2="140" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#4D3025"/>
+      <stop offset="1" stop-color="#2F1C17"/>
+    </linearGradient>
+    <filter id="shadow" x="-40" y="-40" width="1280" height="500" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+      <feDropShadow dx="0" dy="18" stdDeviation="18" flood-color="#6A4A34" flood-opacity="0.18"/>
+    </filter>
+  </defs>
+
+  <rect width="1200" height="420" rx="28" fill="url(#bg)"/>
+  <g opacity="0.22">
+    <path d="M70 90C184 43 329 39 450 70C567 100 647 110 771 87C868 69 987 57 1126 96" stroke="#A16F44" stroke-width="2"/>
+    <path d="M75 310C210 278 350 275 478 311C603 347 704 357 823 328C924 303 1032 291 1131 322" stroke="#9C6A41" stroke-width="2"/>
+    <path d="M117 58L117 362" stroke="#C19365" stroke-width="1.5"/>
+    <path d="M1083 58L1083 362" stroke="#C19365" stroke-width="1.5"/>
+  </g>
+
+  <g filter="url(#shadow)">
+    <rect x="54" y="42" width="1092" height="336" rx="24" fill="url(#panel)" stroke="#B48254" stroke-width="1.5"/>
+  </g>
+
+  <rect x="94" y="95" width="8" height="228" rx="4" fill="#734C33"/>
+  <rect x="1098" y="95" width="8" height="228" rx="4" fill="#734C33"/>
+  <rect x="102" y="316" width="996" height="7" rx="3.5" fill="#8B5E3F" fill-opacity="0.55"/>
+
+  <g opacity="0.94">
+    <rect x="790" y="116" width="58" height="152" rx="8" fill="url(#spine1)"/>
+    <rect x="855" y="130" width="48" height="138" rx="8" fill="url(#spine2)"/>
+    <rect x="909" y="104" width="64" height="164" rx="8" fill="url(#spine3)"/>
+    <rect x="979" y="122" width="56" height="146" rx="8" fill="url(#spine2)"/>
+    <rect x="1041" y="142" width="34" height="126" rx="8" fill="url(#spine1)"/>
+
+    <rect x="801" y="145" width="36" height="4" rx="2" fill="#E7C79E"/>
+    <rect x="801" y="157" width="24" height="4" rx="2" fill="#E7C79E"/>
+    <rect x="865" y="158" width="27" height="4" rx="2" fill="#F8E6C7"/>
+    <rect x="919" y="140" width="44" height="4" rx="2" fill="#C9A17A"/>
+    <rect x="919" y="152" width="31" height="4" rx="2" fill="#C9A17A"/>
+    <rect x="990" y="152" width="33" height="4" rx="2" fill="#F6DFC3"/>
+    <rect x="1047" y="168" width="20" height="4" rx="2" fill="#E6C19D"/>
+  </g>
+
+  <g opacity="0.7">
+    <path d="M763 287C805 268 855 259 909 259C963 259 1011 268 1053 287" stroke="#8E5D3E" stroke-width="2"/>
+    <path d="M763 298C805 280 855 271 909 271C963 271 1011 280 1053 298" stroke="#B27D50" stroke-width="2"/>
+  </g>
+
+  <text x="142" y="148" fill="#5A3B28" font-family="Georgia, 'Times New Roman', serif" font-size="72" font-weight="700" letter-spacing="1.4">InkFold</text>
+  <text x="144" y="187" fill="#7A563D" font-family="Verdana, Arial, sans-serif" font-size="20" font-weight="700" letter-spacing="3.2">A LOCAL-FIRST ANDROID EPUB READER</text>
+  <text x="144" y="235" fill="#604433" font-family="Verdana, Arial, sans-serif" font-size="28" font-weight="700">Quiet shelf. Clean reader. Persistent progress.</text>
+  <text x="144" y="273" fill="#6C513F" font-family="Verdana, Arial, sans-serif" font-size="20">Compose editorial home, fragment-hosted Readium reading, shared appearance defaults,</text>
+  <text x="144" y="301" fill="#6C513F" font-family="Verdana, Arial, sans-serif" font-size="20">and built-in read aloud for personal EPUB libraries that stay on-device.</text>
+
+  <g>
+    <rect x="144" y="329" width="154" height="34" rx="17" fill="#5B4636"/>
+    <rect x="312" y="329" width="134" height="34" rx="17" fill="#A46A3D"/>
+    <rect x="459" y="329" width="126" height="34" rx="17" fill="#7B5C46"/>
+    <text x="169" y="351" fill="#FFF7EE" font-family="Verdana, Arial, sans-serif" font-size="14" font-weight="700">LOCAL-FIRST</text>
+    <text x="339" y="351" fill="#FFF7EE" font-family="Verdana, Arial, sans-serif" font-size="14" font-weight="700">READIUM</text>
+    <text x="485" y="351" fill="#FFF7EE" font-family="Verdana, Arial, sans-serif" font-size="14" font-weight="700">COMPOSE UI</text>
+  </g>
+</svg>

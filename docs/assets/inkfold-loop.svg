@@ -1,0 +1,71 @@
+<svg width="1200" height="260" viewBox="0 0 1200 260" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="title desc">
+  <title id="title">InkFold reading loop</title>
+  <desc id="desc">Five-step loop showing import, local storage, shelf presentation, reading, and resume.</desc>
+  <defs>
+    <linearGradient id="bg" x1="600" y1="0" x2="600" y2="260" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#FBF5EA"/>
+      <stop offset="1" stop-color="#F1E0C4"/>
+    </linearGradient>
+    <linearGradient id="stepA" x1="0" y1="0" x2="0" y2="110" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#F5E0C0"/>
+      <stop offset="1" stop-color="#E2C292"/>
+    </linearGradient>
+    <linearGradient id="stepB" x1="0" y1="0" x2="0" y2="110" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#E1B985"/>
+      <stop offset="1" stop-color="#C58A53"/>
+    </linearGradient>
+    <filter id="shadow" x="-40" y="-30" width="1280" height="320" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+      <feDropShadow dx="0" dy="14" stdDeviation="14" flood-color="#7A573D" flood-opacity="0.14"/>
+    </filter>
+  </defs>
+
+  <rect width="1200" height="260" rx="24" fill="url(#bg)"/>
+  <text x="54" y="48" fill="#5C3E2B" font-family="Georgia, 'Times New Roman', serif" font-size="34" font-weight="700">The InkFold Product Loop</text>
+  <text x="55" y="78" fill="#7A5A45" font-family="Verdana, Arial, sans-serif" font-size="16">Keep the product narrow, local, and dependable.</text>
+
+  <g filter="url(#shadow)">
+    <rect x="48" y="106" width="176" height="110" rx="18" fill="url(#stepA)"/>
+    <rect x="272" y="106" width="176" height="110" rx="18" fill="#F2D3A6"/>
+    <rect x="496" y="106" width="176" height="110" rx="18" fill="url(#stepB)"/>
+    <rect x="720" y="106" width="176" height="110" rx="18" fill="#D9A56A"/>
+    <rect x="944" y="106" width="208" height="110" rx="18" fill="#6A4A34"/>
+  </g>
+
+  <g fill="#6B4A34">
+    <path d="M238 160H258" stroke="#9C6E45" stroke-width="5" stroke-linecap="round"/>
+    <path d="M462 160H482" stroke="#9C6E45" stroke-width="5" stroke-linecap="round"/>
+    <path d="M686 160H706" stroke="#9C6E45" stroke-width="5" stroke-linecap="round"/>
+    <path d="M910 160H930" stroke="#9C6E45" stroke-width="5" stroke-linecap="round"/>
+    <path d="M252 160L244 152M252 160L244 168" stroke="#9C6E45" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M476 160L468 152M476 160L468 168" stroke="#9C6E45" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M700 160L692 152M700 160L692 168" stroke="#9C6E45" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M924 160L916 152M924 160L916 168" stroke="#9C6E45" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
+  </g>
+
+  <g font-family="Verdana, Arial, sans-serif">
+    <text x="68" y="135" fill="#5A3D2B" font-size="13" font-weight="700" letter-spacing="1.2">STEP 01</text>
+    <text x="68" y="164" fill="#4E3527" font-size="22" font-weight="700">Import EPUB</text>
+    <text x="68" y="188" fill="#694D3A" font-size="15">System picker or</text>
+    <text x="68" y="208" fill="#694D3A" font-size="15">Android open flow</text>
+
+    <text x="292" y="135" fill="#6C4528" font-size="13" font-weight="700" letter-spacing="1.2">STEP 02</text>
+    <text x="292" y="164" fill="#4E3527" font-size="22" font-weight="700">Copy Local</text>
+    <text x="292" y="188" fill="#694D3A" font-size="15">App-managed file</text>
+    <text x="292" y="208" fill="#694D3A" font-size="15">storage and dedupe</text>
+
+    <text x="516" y="135" fill="#FFF4E8" font-size="13" font-weight="700" letter-spacing="1.2">STEP 03</text>
+    <text x="516" y="164" fill="#FFF8F1" font-size="22" font-weight="700">Shelf It</text>
+    <text x="516" y="188" fill="#FCECD8" font-size="15">Editorial home</text>
+    <text x="516" y="208" fill="#FCECD8" font-size="15">with recent imports</text>
+
+    <text x="740" y="135" fill="#FFF1DF" font-size="13" font-weight="700" letter-spacing="1.2">STEP 04</text>
+    <text x="740" y="164" fill="#FFF8F1" font-size="22" font-weight="700">Read Calmly</text>
+    <text x="740" y="188" fill="#FFF2E0" font-size="15">Readium rendering</text>
+    <text x="740" y="208" fill="#FFF2E0" font-size="15">with overlay chrome</text>
+
+    <text x="966" y="135" fill="#F2DECB" font-size="13" font-weight="700" letter-spacing="1.2">STEP 05</text>
+    <text x="966" y="164" fill="#FFF8F1" font-size="22" font-weight="700">Resume Later</text>
+    <text x="966" y="188" fill="#F3E2D3" font-size="15">Persist locator,</text>
+    <text x="966" y="208" fill="#F3E2D3" font-size="15">progression, last opened</text>
+  </g>
+</svg>

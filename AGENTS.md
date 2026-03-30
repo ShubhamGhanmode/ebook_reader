@@ -206,6 +206,7 @@ Manual acceptance to prefer when available:
 
 - Update this file whenever architecture, storage model, build constraints, or verification status changes.
 - Update `README.md` when setup, status, or contributor-facing behavior changes.
+- `README.md` is now a presentation-grade landing page with repo-native SVG artwork, setup guidance, verification tables, and product/scope sections; preserve that level of detail and visual structure when refreshing it.
 - Keep `IMPROV.md` aligned with the latest agreed roadmap status, including shipped reader ergonomics/accessibility features and any remaining validation follow-up.
 - Keep guidance specific to InkFold and its current implementation rather than generic Android advice.
 - If a task only changes external tooling or agent skills outside this repo, keep InkFold product guidance intact and only update this file when the contributor workflow itself needs clarification.
