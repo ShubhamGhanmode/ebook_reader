@@ -14,6 +14,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import com.shubhamghanmode.inkfold.InkFoldApplication
 import com.shubhamghanmode.inkfold.R
+import com.shubhamghanmode.inkfold.feature.reader.preferences.ReaderThemeOption
 import com.shubhamghanmode.inkfold.feature.reader.tts.ReaderTtsError
 import com.shubhamghanmode.inkfold.ui.theme.AppThemeSettings
 import com.shubhamghanmode.inkfold.ui.theme.InkFoldTheme
@@ -41,7 +42,10 @@ class ReaderActivity : AppCompatActivity() {
                     initialValue = AppThemeSettings()
                 )
 
-                InkFoldTheme(themePreset = appThemeSettings.themePreset) {
+                InkFoldTheme(
+                    themePreset = appThemeSettings.themePreset,
+                    darkStatusBarIcons = uiState.appearance.selectedTheme != ReaderThemeOption.DARK
+                ) {
                     ReaderOverlay(
                         uiState = uiState,
                         onNavigateBack = {

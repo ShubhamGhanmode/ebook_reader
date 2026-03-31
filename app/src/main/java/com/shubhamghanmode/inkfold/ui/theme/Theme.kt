@@ -17,6 +17,8 @@ import androidx.core.view.WindowCompat
 fun InkFoldTheme(
     themePreset: AppThemePreset = AppThemePreset.CLASSIC,
     darkTheme: Boolean = isSystemInDarkTheme(),
+    darkStatusBarIcons: Boolean? = null,
+    darkNavigationBarIcons: Boolean? = null,
     content: @Composable () -> Unit
 ) {
     val colorScheme = themePreset.colorScheme(darkTheme)
@@ -25,7 +27,13 @@ fun InkFoldTheme(
     if (!view.isInEditMode) {
         SideEffect {
             val activity = view.context.findActivity() ?: return@SideEffect
-            activity.syncInkFoldWindow(colorScheme = colorScheme, darkTheme = darkTheme, view = view)
+            activity.syncInkFoldWindow(
+                colorScheme = colorScheme,
+                darkTheme = darkTheme,
+                darkStatusBarIcons = darkStatusBarIcons,
+                darkNavigationBarIcons = darkNavigationBarIcons,
+                view = view
+            )
         }
     }
 
@@ -47,6 +55,8 @@ private tailrec fun Context.findActivity(): Activity? =
 private fun Activity.syncInkFoldWindow(
     colorScheme: ColorScheme,
     darkTheme: Boolean,
+    darkStatusBarIcons: Boolean?,
+    darkNavigationBarIcons: Boolean?,
     view: android.view.View
 ) {
     val backgroundColor = colorScheme.background.toArgb()
@@ -55,7 +65,7 @@ private fun Activity.syncInkFoldWindow(
     window.setBackgroundDrawable(ColorDrawable(backgroundColor))
     window.navigationBarColor = backgroundColor
     WindowCompat.getInsetsController(window, view).apply {
-        isAppearanceLightStatusBars = !darkTheme
-        isAppearanceLightNavigationBars = !darkTheme
+        isAppearanceLightStatusBars = darkStatusBarIcons ?: !darkTheme
+        isAppearanceLightNavigationBars = darkNavigationBarIcons ?: !darkTheme
     }
 }

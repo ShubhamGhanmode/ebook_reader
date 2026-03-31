@@ -28,16 +28,19 @@ Keep the app focused on this loop unless the user explicitly asks for broader sc
 - Imports are deduplicated by SHA-256 content hash.
 - Build uses core library desugaring because Readium requires it.
 - App theme colors now support eight persisted Material 3-derived preset palettes from the home-screen settings sheet.
+- Classic Shelf, Redwood Binding, and Amber Cloth were regenerated from distinct Material 3 seeds so the warm presets now separate into leather-brown, maroon-plum, and true-amber families instead of clustering around the same terracotta range.
 - Fresh installs and missing/invalid app-theme preference values now default to the Iron Ledger palette preset.
 - Compose home UI and the fragment/XML reader both follow the system light/dark setting within the selected InkFold palette preset.
+- Reader status-bar icon contrast now follows the active reader appearance theme, with light icons for the dark reader theme and dark icons for light or sepia.
 - Reader appearance settings now support shared EPUB defaults for theme, paged-versus-scroll mode, bounded font size, typeface, dark-theme image filters, and discrete page margins.
+- The sepia reader option now uses InkFold-specific Readium color overrides with background `#FFECC3` and content `#121212` instead of the bundled Readium sepia defaults.
 - Reader chrome is now an overlaid Compose layer with a hideable top bar and anchored settings sheet instead of a layout-consuming toolbar row.
 - Reader chrome now also includes a bottom progress sheet with a quick-jump slider plus an outline sheet for Contents, Pages, and Landmarks when the publication exposes them.
 - Reader read aloud now ships through Readium TTS with compact transport controls, spoken-text highlight, throttled visual follow-along, and separate speed/pitch/language/voice settings.
 - Custom reader font assets are served from `app/src/main/assets/fonts/` through `ReaderNavigatorConfiguration`.
 - Page-flip work is scaffolded only through `PageFlipCoordinator`, `PageFlipOverlay`, and `PageSnapshotter`; no interactive page-flip feature ships yet.
 - Shelf cover fallbacks are rendered directly in Compose; do not route layered XML drawables such as `layer-list` placeholders through Compose `painterResource()`.
-- Verified on `2026-03-29`:
+- Verified on `2026-03-31`:
   - `:app:assembleDebug` passes.
   - `:app:testDebugUnitTest` passes.
   - `:app:assembleDebugAndroidTest` passes.
@@ -106,6 +109,7 @@ Responsibilities:
 - Keep TOC/page-list/landmark mapping inside `feature/reader/outline/` and expose only UI-safe models to Compose.
 - Keep read-aloud integration inside `feature/reader/tts/`; start TTS from the current visible locator and keep follow-along jumps throttled.
 - Keep EPUB appearance persistence inside `feature/reader/preferences/` and use Readium preference APIs rather than custom CSS injection.
+- Keep the custom InkFold sepia reader treatment implemented through Readium `backgroundColor` / `textColor` preference overrides paired with `Theme.SEPIA`, rather than trying to invent a fourth Readium `Theme` enum value.
 - The current settings UI edits shared EPUB defaults only. The storage layer is ready for per-book overrides, but the UI should stay shared-defaults-first unless explicitly expanded.
 - Keep TTS preferences separate from EPUB appearance preferences.
 - Use the bundled sample app in `readium-kotlin-toolkit-3.1.2/test-app/` as the primary implementation reference.

@@ -3,6 +3,7 @@ package com.shubhamghanmode.inkfold.feature.reader.preferences
 import kotlin.math.abs
 import org.readium.r2.navigator.epub.EpubPreferences
 import org.readium.r2.navigator.preferences.FontFamily
+import org.readium.r2.navigator.preferences.Theme
 import org.readium.r2.shared.ExperimentalReadiumApi
 
 @OptIn(ExperimentalReadiumApi::class)
@@ -20,12 +21,19 @@ object ReaderPreferenceNormalizer {
         FontFamily.OPEN_DYSLEXIC
     )
 
-    fun normalize(preferences: EpubPreferences): EpubPreferences =
-        preferences.copy(
+    fun normalize(preferences: EpubPreferences): EpubPreferences {
+        val normalizedPreferences = preferences.copy(
             fontSize = preferences.fontSize?.let(::clampTextSize),
             pageMargins = preferences.pageMargins?.let { snapPageMargins(it).value },
             fontFamily = preferences.fontFamily?.takeIf { it in supportedFontFamilies }
         )
+        return when (normalizedPreferences.theme) {
+            Theme.LIGHT -> ReaderThemeOption.LIGHT.applyTo(normalizedPreferences)
+            Theme.SEPIA -> ReaderThemeOption.SEPIA.applyTo(normalizedPreferences)
+            Theme.DARK -> ReaderThemeOption.DARK.applyTo(normalizedPreferences)
+            null -> normalizedPreferences
+        }
+    }
 
     fun clampTextSize(value: Double): Double =
         value.coerceIn(TextSizeMin, TextSizeMax)

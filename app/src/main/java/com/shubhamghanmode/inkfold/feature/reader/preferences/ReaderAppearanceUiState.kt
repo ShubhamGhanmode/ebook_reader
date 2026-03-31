@@ -4,11 +4,12 @@ import androidx.annotation.StringRes
 import androidx.compose.ui.graphics.Color
 import com.shubhamghanmode.inkfold.R
 import com.shubhamghanmode.inkfold.feature.reader.ReaderNavigatorConfiguration.LITERATA
-import com.shubhamghanmode.inkfold.ui.theme.Ink
 import com.shubhamghanmode.inkfold.ui.theme.NightAccent
 import com.shubhamghanmode.inkfold.ui.theme.NightPaper
 import com.shubhamghanmode.inkfold.ui.theme.Parchment
 import com.shubhamghanmode.inkfold.ui.theme.ParchmentDeep
+import org.readium.r2.navigator.epub.EpubPreferences
+import org.readium.r2.navigator.preferences.Color as ReadiumColor
 import org.readium.r2.navigator.preferences.FontFamily
 import org.readium.r2.navigator.preferences.ImageFilter
 import org.readium.r2.navigator.preferences.Theme
@@ -20,112 +21,124 @@ enum class ReaderThemeOption(
     @param:StringRes val labelRes: Int,
     val previewBackground: Color,
     val previewForeground: Color,
-    val accentColor: Color
+    val accentColor: Color,
+    val readiumBackgroundColor: ReadiumColor? = null,
+    val readiumContentColor: ReadiumColor? = null,
 ) {
     LIGHT(
         readiumTheme = Theme.LIGHT,
         labelRes = R.string.reader_settings_theme_light,
         previewBackground = Color(0xFFFFFFFF),
         previewForeground = Color(0xFF121212),
-        accentColor = ParchmentDeep
+        accentColor = ParchmentDeep,
     ),
     SEPIA(
         readiumTheme = Theme.SEPIA,
         labelRes = R.string.reader_settings_theme_sepia,
-        previewBackground = Color(0xFFFAF4E8),
-        previewForeground = Ink,
-        accentColor = Parchment
+        previewBackground = Color(0xFFFFECC3),
+        previewForeground = Color(0xFF121212),
+        accentColor = Parchment,
+        readiumBackgroundColor = ReadiumColor(0xFFFFECC3.toInt()),
+        readiumContentColor = ReadiumColor(0xFF121212.toInt()),
     ),
     DARK(
         readiumTheme = Theme.DARK,
         labelRes = R.string.reader_settings_theme_dark,
         previewBackground = NightPaper,
         previewForeground = Color(0xFFFEFEFE),
-        accentColor = NightAccent
-    );
+        accentColor = NightAccent,
+    ),
+    ;
+
+    fun applyTo(preferences: EpubPreferences): EpubPreferences =
+        preferences.copy(
+            theme = readiumTheme,
+            backgroundColor = readiumBackgroundColor,
+            textColor = readiumContentColor
+        )
 
     companion object {
-        fun from(theme: Theme): ReaderThemeOption =
-            entries.firstOrNull { it.readiumTheme == theme } ?: LIGHT
+        fun from(theme: Theme): ReaderThemeOption = entries.firstOrNull { it.readiumTheme == theme } ?: LIGHT
     }
 }
 
 @OptIn(ExperimentalReadiumApi::class)
 enum class ReaderScrollModeOption(
     val readiumValue: Boolean,
-    @param:StringRes val labelRes: Int
+    @param:StringRes val labelRes: Int,
 ) {
     PAGED(
         readiumValue = false,
-        labelRes = R.string.reader_settings_scroll_paged
+        labelRes = R.string.reader_settings_scroll_paged,
     ),
     SCROLL(
         readiumValue = true,
-        labelRes = R.string.reader_settings_scroll_scroll
-    );
+        labelRes = R.string.reader_settings_scroll_scroll,
+    ),
+    ;
 
     companion object {
-        fun from(value: Boolean): ReaderScrollModeOption =
-            entries.firstOrNull { it.readiumValue == value } ?: PAGED
+        fun from(value: Boolean): ReaderScrollModeOption = entries.firstOrNull { it.readiumValue == value } ?: PAGED
     }
 }
 
 @OptIn(ExperimentalReadiumApi::class)
 enum class ReaderTypefaceOption(
     val readiumFontFamily: FontFamily?,
-    @param:StringRes val labelRes: Int
+    @param:StringRes val labelRes: Int,
 ) {
     ORIGINAL(
         readiumFontFamily = null,
-        labelRes = R.string.reader_settings_typeface_original
+        labelRes = R.string.reader_settings_typeface_original,
     ),
     LITERATA(
         readiumFontFamily = FontFamily.LITERATA,
-        labelRes = R.string.reader_settings_typeface_literata
+        labelRes = R.string.reader_settings_typeface_literata,
     ),
     SERIF(
         readiumFontFamily = FontFamily.SERIF,
-        labelRes = R.string.reader_settings_typeface_serif
+        labelRes = R.string.reader_settings_typeface_serif,
     ),
     SANS_SERIF(
         readiumFontFamily = FontFamily.SANS_SERIF,
-        labelRes = R.string.reader_settings_typeface_sans_serif
+        labelRes = R.string.reader_settings_typeface_sans_serif,
     ),
     IA_WRITER_DUOSPACE(
         readiumFontFamily = FontFamily.IA_WRITER_DUOSPACE,
-        labelRes = R.string.reader_settings_typeface_ia_writer
+        labelRes = R.string.reader_settings_typeface_ia_writer,
     ),
     ACCESSIBLE_DFA(
         readiumFontFamily = FontFamily.ACCESSIBLE_DFA,
-        labelRes = R.string.reader_settings_typeface_accessible_dfa
+        labelRes = R.string.reader_settings_typeface_accessible_dfa,
     ),
     OPEN_DYSLEXIC(
         readiumFontFamily = FontFamily.OPEN_DYSLEXIC,
-        labelRes = R.string.reader_settings_typeface_open_dyslexic
-    );
+        labelRes = R.string.reader_settings_typeface_open_dyslexic,
+    ),
+    ;
 
     companion object {
-        fun from(fontFamily: FontFamily?): ReaderTypefaceOption =
-            entries.firstOrNull { it.readiumFontFamily == fontFamily } ?: ORIGINAL
+        fun from(fontFamily: FontFamily?): ReaderTypefaceOption = entries.firstOrNull { it.readiumFontFamily == fontFamily } ?: ORIGINAL
     }
 }
 
 enum class ReaderImageFilterOption(
     val readiumImageFilter: ImageFilter?,
-    @param:StringRes val labelRes: Int
+    @param:StringRes val labelRes: Int,
 ) {
     ORIGINAL(
         readiumImageFilter = null,
-        labelRes = R.string.reader_settings_image_filter_original
+        labelRes = R.string.reader_settings_image_filter_original,
     ),
     DARKEN(
         readiumImageFilter = ImageFilter.DARKEN,
-        labelRes = R.string.reader_settings_image_filter_darken
+        labelRes = R.string.reader_settings_image_filter_darken,
     ),
     INVERT(
         readiumImageFilter = ImageFilter.INVERT,
-        labelRes = R.string.reader_settings_image_filter_invert
-    );
+        labelRes = R.string.reader_settings_image_filter_invert,
+    ),
+    ;
 
     companion object {
         fun from(imageFilter: ImageFilter?): ReaderImageFilterOption =
@@ -135,13 +148,13 @@ enum class ReaderImageFilterOption(
 
 enum class ReaderPageMarginPreset(
     val value: Double,
-    @param:StringRes val labelRes: Int
+    @param:StringRes val labelRes: Int,
 ) {
     TIGHT(0.0, R.string.reader_settings_page_margins_tight),
     NARROW(0.5, R.string.reader_settings_page_margins_narrow),
     STANDARD(1.0, R.string.reader_settings_page_margins_standard),
     COMFORTABLE(1.5, R.string.reader_settings_page_margins_comfortable),
-    WIDE(2.0, R.string.reader_settings_page_margins_wide)
+    WIDE(2.0, R.string.reader_settings_page_margins_wide),
 }
 
 data class ReaderAppearanceUiState(
@@ -164,5 +177,5 @@ data class ReaderAppearanceUiState(
     val canDecreasePageMargins: Boolean = false,
     val canIncreasePageMargins: Boolean = false,
     val canReset: Boolean = false,
-    @param:StringRes val helperMessageRes: Int? = null
+    @param:StringRes val helperMessageRes: Int? = null,
 )

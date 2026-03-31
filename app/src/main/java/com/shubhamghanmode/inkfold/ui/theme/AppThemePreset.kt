@@ -12,11 +12,18 @@ enum class AppThemePreset(
     val seedColor: Color,
     private val palette: InkFoldPalette
 ) {
+    IRON(
+        storageKey = "iron",
+        labelRes = R.string.app_theme_iron,
+        descriptionRes = R.string.app_theme_iron_description,
+        seedColor = Color(0xFF5A6168),
+        palette = InkFoldPalettes.Iron
+    ),
     CLASSIC(
         storageKey = "classic",
         labelRes = R.string.app_theme_classic,
         descriptionRes = R.string.app_theme_classic_description,
-        seedColor = Color(0xFFB96D4B),
+        seedColor = Color(0xFF9A6B2F),
         palette = InkFoldPalettes.Classic
     ),
     CYPRESS(
@@ -37,7 +44,7 @@ enum class AppThemePreset(
         storageKey = "redwood",
         labelRes = R.string.app_theme_redwood,
         descriptionRes = R.string.app_theme_redwood_description,
-        seedColor = Color(0xFF7A4B3A),
+        seedColor = Color(0xFF7B2945),
         palette = InkFoldPalettes.Redwood
     ),
     MOSS(
@@ -58,15 +65,8 @@ enum class AppThemePreset(
         storageKey = "amber",
         labelRes = R.string.app_theme_amber,
         descriptionRes = R.string.app_theme_amber_description,
-        seedColor = Color(0xFFA56A42),
+        seedColor = Color(0xFFFFBF00),
         palette = InkFoldPalettes.Amber
-    ),
-    IRON(
-        storageKey = "iron",
-        labelRes = R.string.app_theme_iron,
-        descriptionRes = R.string.app_theme_iron_description,
-        seedColor = Color(0xFF5A6168),
-        palette = InkFoldPalettes.Iron
     );
 
     val previewSwatches: List<Color>

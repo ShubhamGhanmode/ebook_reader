@@ -260,7 +260,7 @@ class ReaderViewModel(
 
     fun selectTheme(themeOption: ReaderThemeOption) {
         updateSharedPreferences(persistImmediately = true) { preferences ->
-            preferences.copy(theme = themeOption.readiumTheme)
+            themeOption.applyTo(preferences)
         }
     }
 

@@ -58,7 +58,7 @@ That constraint is the product. InkFold is not trying to be a cloud library, sto
 | Library | App-managed EPUB copies, separate extracted covers, SHA-256 dedupe, explicit remove actions, recent imports row, and continue-reading prominence. |
 | Reader | Hybrid architecture with Compose overlay chrome and `EpubNavigatorFragment` rendering. |
 | Navigation | Resume from last locator, quick-jump progression slider, and Contents / Pages / Landmarks sheets when available. |
-| Appearance | Eight persisted Material 3-derived InkFold palettes plus shared EPUB appearance defaults stored through DataStore-backed Readium preferences. |
+| Appearance | Eight persisted Material 3-derived InkFold palettes, including refreshed leather-brown Classic Shelf, maroon-plum Redwood Binding, and true-amber Amber Cloth variants, plus shared EPUB appearance defaults stored through DataStore-backed Readium preferences and an InkFold-tuned sepia reader override (`#FFECC3` background / `#121212` text). |
 | Read Aloud | Readium TTS integration with compact controls, highlight, follow-along throttling, and recovery prompts for missing voice data. |
 | Persistence | Room-backed book metadata and reading progression, plus separate DataStore stores for app theme and reader/TTS preferences. |
 

@@ -1,6 +1,6 @@
 # InkFold Reader Roadmap Status
 
-Updated on `2026-03-29`.
+Updated on `2026-03-31`.
 
 The reader roadmap that previously lived in this file has now been implemented in the current branch. This document now tracks what shipped and what still needs validation or follow-up.
 
@@ -19,7 +19,8 @@ The reader roadmap that previously lived in this file has now been implemented i
 6. Dark-theme image filter options for `Original`, `Darken`, and `Invert`.
 7. Bottom-chrome outline access for `Contents`, `Pages`, and `Landmarks` when present.
 8. Expanded app-palette support with eight persisted InkFold presets generated from Material 3 color roles.
-9. Shared reader cleanup work that supports the above:
+9. InkFold-specific sepia reader polish now overrides Readium's bundled sepia colors with a warmer `#FFECC3` page background while keeping `#121212` text for contrast.
+10. Shared reader cleanup work that supports the above:
    - split reader UI state by appearance, navigation, and TTS concerns
    - centralized navigator configuration in `ReaderNavigatorConfiguration`
    - added preference normalization helpers
